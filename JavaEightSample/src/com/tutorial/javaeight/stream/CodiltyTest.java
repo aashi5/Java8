@@ -12,14 +12,20 @@ public class CodiltyTest {
 		Arrays.parallelSort(numarr);
 		//System.out.println(solution(numarr));
 		//System.out.println(solution(numarr,0));
-		solution(1232);
-		//solution("011100");
+		//solution(1232);
+		solution("011100");
 	}
 		
 	
 	
+	/**
+	 * divide the integer by 2 if the number is odd or else reduce 1
+	 * @param S
+	 * @return
+	 */
 	 public static  int solution(String S) {
 	        // write your code in Java SE 8
+		 // converting the binary number to decimal  
 		 long decimal=Long.parseLong(S,2);
 		// int value =0;
 		 int counter =0;
