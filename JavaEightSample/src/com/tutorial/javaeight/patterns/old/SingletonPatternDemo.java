@@ -1,4 +1,4 @@
-package com.tutorial.javaeight.patterns;
+package com.tutorial.javaeight.patterns.old;
 
 public class SingletonPatternDemo {
 	

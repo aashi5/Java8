@@ -1,9 +1,15 @@
-package com.tutorial.javaeight.patterns;
+package com.tutorial.javaeight.pattern.java8;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
+import com.tutorial.javaeight.pattern.Circle;
+import com.tutorial.javaeight.pattern.Shape;
+import com.tutorial.javaeight.pattern.ShapeType;
+import com.tutorial.javaeight.pattern.Square;
+import com.tutorial.javaeight.pattern.Triangle;
 
 /**
  * Factory Pattern sample implementation prior to java 8 
@@ -12,17 +18,17 @@ import java.util.function.Supplier;
  */
 	
 
-public class FactoryPattern8Demo {
+public class FactoryPatternDemo {
 
 	public static void main(String...args) {
 		ShapeFactory8 factory = new ShapeFactory8();
-		Shape square= factory.getShape("square");
+		Shape square= factory.getShape(ShapeType.SQUARE).get();
 		square.draw();
 		
 		
 		// adding a new Shape type 
-		ShapeFactory8.registerSupplier("special",SpecialSupplier::new);
-		Shape shapeDemo =  ((ShapeFactory8) factory).getShape("special");
+		ShapeFactory8.registerSupplier(ShapeType.SPECIAL,SpecialSupplier::new);
+		Shape shapeDemo =  ((ShapeFactory8) factory).getShape(ShapeType.SPECIAL).get();
 		shapeDemo.draw();
 	}
 }
@@ -36,13 +42,14 @@ public class FactoryPattern8Demo {
  *
  */
 class ShapeFactory8{
-	final static Map<String, Supplier<Shape>> shapeMap =
+	final static Map<ShapeType, Supplier<Shape>> shapeMap =
 				new  HashMap<>();
 	static {
 		
-		shapeMap.put("circle",Circle::new);
-		shapeMap.put("square",Square::new);
-		shapeMap.put("triangle",Triangle::new);
+		shapeMap.put(ShapeType.CIRCLE,Circle::new);
+		shapeMap.put(ShapeType.SQUARE,Square::new);
+		shapeMap.put(ShapeType.TRIANGLE,Triangle::new);
+		
 	}
 	
 	/**
@@ -50,7 +57,7 @@ class ShapeFactory8{
 	 * @param type
 	 * @param shapeClass
 	 */
-	public static void registerSupplier(String type , Supplier<Shape> shapeClass) {
+	public static void registerSupplier(ShapeType type , Supplier<Shape> shapeClass) {
 		shapeMap.put(type, shapeClass);
 	}
 	
@@ -59,11 +66,11 @@ class ShapeFactory8{
 	 * @param shapeType
 	 * @return
 	 */
-	public Shape getShape(String shapeType) {
+	public Optional<Shape> getShape(ShapeType shapeType) {
 		Supplier<Shape> shapeObj =shapeMap.get(shapeType);
 		
 		if(shapeObj!=null) {
-			return shapeObj.get();
+			return Optional.ofNullable(shapeObj.get());
 		}
 		throw new  IllegalArgumentException("No such shape exits");
 		
@@ -73,20 +80,18 @@ class ShapeFactory8{
 
 class SpecialSupplier implements Shape{
 
-	
 	public void draw() {
 		// TODO Auto-generated method stub
 		System.out.println("This is a special shape");
 	}
 
 	@Override
-	public double area(float... params) {
+	public double area() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	
-	
+
 }
 
 

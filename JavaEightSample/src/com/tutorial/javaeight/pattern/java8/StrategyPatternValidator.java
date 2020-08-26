@@ -1,4 +1,4 @@
-package com.tutorial.javaeight.pattern;
+package com.tutorial.javaeight.pattern.java8;
 
 import java.util.function.Predicate;
 /**

@@ -1,20 +1,13 @@
-package com.tutorial.javaeight.patterns;
+package com.tutorial.javaeight.patterns.old;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Factory Pattern sample implementation prior to java 8 
- * @author Ashwini
- *
- */
-	enum ShapeType{
-		CIRCLE,
-		SQUARE,
-		TRIANGLE,
-		SPECIAL
-	}
-
+import com.tutorial.javaeight.pattern.Circle;
+import com.tutorial.javaeight.pattern.Shape;
+import com.tutorial.javaeight.pattern.ShapeType;
+import com.tutorial.javaeight.pattern.Square;
+import com.tutorial.javaeight.pattern.Triangle;
 
 public class FactoryPatternDemo {
 	
@@ -49,77 +42,28 @@ class ShapeFactory implements IShapeFactory{
 		shapeMap.put(ShapeType.TRIANGLE,new Triangle());
 	}
 	
-	
+
+	/**
+	 * get the shape object based on the shape type passed.
+	 */
 	public Shape getShape(ShapeType shapeName){	
-		
-		
+	
 		/*
 		 * Shape shape = null; switch(shapeName) { case CIRCLE: shape =new Circle();
 		 * break; case SQUARE: shape=new Square(); break;
 		 * 
 		 * case TRIANGLE: shape=new Triangle(); break; default: break; }
 		 */
+		Shape shape=shapeMap.get(shapeName);
+		if(shape!=null) {
+			return shape;
+		}
+		throw new  IllegalArgumentException("No such shape exists");
 		
-		return shapeMap.get(shapeName);
-		
 	}
 }
-
-/**
- * 
- * @author Ashwini
- *
- */
-interface Shape {
-	void draw();
-	double area(float ...params);
-}
-class Circle implements Shape {
-
-	@Override
-	public void draw() {
-		System.out.println("This is a Circle Shape");
-	}
-
-	@Override
-	public double area(float ...radius) {
-		
-		return radius[0]*3.14;
-	}
 
 	
-	
-}
 
-class Square implements Shape {
-
-	@Override
-	public void draw() {
-		System.out.println("This is a Square Shape");
-	}
-
-	@Override
-	public double area(float ...length) {
-		// TODO Auto-generated method stub
-		return length[0]*2;
-	}
-	
-}
-
-
-class Triangle implements Shape {
-
-	@Override
-	public void draw() {
-		System.out.println("This is a Triangle Shape");
-	}
-
-	@Override
-	public double area(float... sides) {
-		// TODO Auto-generated method stub
-		return (sides[0]*sides[0])/2;
-	}
-	
-}
 
 
